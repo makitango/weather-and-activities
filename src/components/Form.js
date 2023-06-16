@@ -1,17 +1,17 @@
-export default function Form() {
-  //   const [activityName, setActivityName] = useState("activityNameKey", {
-  //     defaultValue: "",
-  //   });
-  //   const [goodWeatherState, setgoodWeatherState] = useState("goodWeatherKey", {
-  //     defaultValue: "",
-  //   });
-
-  //   const handleActivityNameChange = (event) => {
-  //     setActivityName(event.target.value);
-  //   };
+export default function Form({ onAddActivity }) {
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
+    const form = event.target;
+    const formElements = form.elements;
+
+    const data = {
+      name: formElements.activityName.value,
+      isForGoodWeather: formElements.goodWeather.checked,
+    };
+
+    onAddActivity(data);
+    form.reset();
+    formElements.activityName.focus();
   }
 
   return (
@@ -19,12 +19,7 @@ export default function Form() {
       <h2>Add new activity</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="activityName">Name for activity</label>
-        <input
-          type="text"
-          id="activityName"
-          name="activityName"
-          //   onActivityNameChange={handleActivityNameChange}
-        />
+        <input type="text" id="activityName" name="activityName" />
 
         <label htmlFor="goodWeather">Good weather stuff?</label>
         <input type="checkbox" id="goodWeather" name="goodWeather" />
@@ -34,18 +29,3 @@ export default function Form() {
     </div>
   );
 }
-
-// export default function App() {
-//     const [note, setNote] = useLocalStorageState("note", { defaultValue: "" });
-//     const [font, setFont] = useLocalStorageState("font", {
-//       defaultValue: "system-ui",
-//     });
-
-//     function handleActivityNameChange(newActivity) {
-//       setActivityName(newActivity);
-//     }
-
-//     return (
-//         <Note note={note} onNoteChange={handleNoteChange} />
-//     );
-//   }
